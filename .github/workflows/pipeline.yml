@@ -3,9 +3,9 @@ name: CI pipeline
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
-    branches: [master]
+    branches: [main]
     types: [opened, synchronize]
     
 jobs:
@@ -32,7 +32,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           command: yarn test:e2e
-          start: yarn start:test
+          start: yarn run start-prod
           wait-on: http://localhost:3001
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
