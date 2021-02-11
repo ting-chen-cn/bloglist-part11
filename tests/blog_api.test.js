@@ -14,24 +14,27 @@ beforeEach(async () => {
     helper.userSave(u)
   )
   await Promise.all(promiseArray)
-  for await (let b of helper.initialBlogs){
-    let returned = await api.post('/api/login').send({
-      username: b.author,
-      password: b.author,
-    })
-    let decodedToken = jwt.verify(returned.body.token, process.env.SECRET)
-    let user = await User.findById(decodedToken.id)
-    let blog = new Blog({
-      title: b.title,
-      url: b.url,
-      author: b.author === undefined ? 'unknown' : b.author,
-      likes: b.likes === undefined ? 0 : b.likes,
-      user: user._id,
-    })
-    const savedBlogs = await blog.save()
-    user.blogs = user.blogs.concat(savedBlogs._id)
-    await user.save()
+  const dataSave = async () => {
+    for await (let b of helper.initialBlogs){
+      let returned = await api.post('/api/login').send({
+        username: b.author,
+        password: b.author,
+      })
+      let decodedToken = jwt.verify(returned.body.token, process.env.SECRET)
+      let user = await User.findById(decodedToken.id)
+      let blog = new Blog({
+        title: b.title,
+        url: b.url,
+        author: b.author === undefined ? 'unknown' : b.author,
+        likes: b.likes === undefined ? 0 : b.likes,
+        user: user._id,
+      })
+      const savedBlogs = await blog.save()
+      user.blogs = user.blogs.concat(savedBlogs._id)
+      await user.save()
+    }
   }
+  await dataSave()
 })
 
 describe('tests for GET', () => {
