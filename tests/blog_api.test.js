@@ -73,7 +73,7 @@ describe('tests for GET', () => {
     const idArray = promiseArray.map((r) => r.response.body.id)
     expect(idArray).toStrictEqual(blogsAtStart.map((r) => r.id))
   })
-})
+}, 10000)
 
 describe('tests for POST', () => {
   test('a valid blog can be added ', async () => {
