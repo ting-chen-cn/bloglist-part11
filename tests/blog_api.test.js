@@ -30,14 +30,13 @@ beforeEach(async () => {
         likes: b.likes === undefined ? 0 : b.likes,
         user: user._id,
       })
-      console.log(blog)
       const savedBlogs = await blog.save()
       user.blogs = user.blogs.concat(savedBlogs._id)
       await user.save()
     }
   }
   await dataSave()
-})
+}, 10000)
 
 describe('tests for GET', () => {
   test('there are six blogs', async () => {
@@ -73,7 +72,7 @@ describe('tests for GET', () => {
     const idArray = promiseArray.map((r) => r.response.body.id)
     expect(idArray).toStrictEqual(blogsAtStart.map((r) => r.id))
   })
-}, 10000)
+})
 
 describe('tests for POST', () => {
   test('a valid blog can be added ', async () => {
