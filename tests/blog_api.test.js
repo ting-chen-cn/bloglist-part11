@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
@@ -29,6 +30,7 @@ beforeEach(async () => {
         likes: b.likes === undefined ? 0 : b.likes,
         user: user._id,
       })
+      console.log(blog)
       const savedBlogs = await blog.save()
       user.blogs = user.blogs.concat(savedBlogs._id)
       await user.save()
