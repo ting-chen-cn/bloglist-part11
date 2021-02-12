@@ -71,6 +71,7 @@ describe('Blog app', function () {
             title: 'first note cypress',
             author: 'Ting Chen',
             url: 'http://localhost:3000/',
+            likes: 0
           })
         })
 
@@ -107,15 +108,14 @@ describe('Blog app', function () {
             title: 'second note cypress',
             author: 'Ting Chen',
             url: 'http://localhost:3000/',
+            likes:1
           })
           cy.createBlog({
             title: 'third note cypress',
             author: 'Ting Chen',
             url: 'http://localhost:3000/',
+            likes:4
           })
-          cy.likeBlog('first note cypress', 0)
-          cy.likeBlog('second note cypress', 1)
-          cy.likeBlog('third note cypress', 4)
           cy.get('.detailedContent').then((blogs) => {
             cy.wrap(blogs[0]).contains('third note cypress')
             cy.wrap(blogs[1]).contains('second note cypress')
