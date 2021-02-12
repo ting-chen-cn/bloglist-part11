@@ -121,7 +121,7 @@ describe('Blog app', function () {
             cy.wrap(blogs[1]).contains('second note cypress')
             cy.wrap(blogs[2]).contains('first note cypress')
           })
-        }, 30000)
+        })
       })
     })
   })
